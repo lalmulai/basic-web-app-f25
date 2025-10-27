@@ -3,7 +3,7 @@ export default function QueryProcessor(query: string): string {
 
   const q = query.toLowerCase().trim();
 
-  
+
   if (query.toLowerCase().includes("shakespeare")) {
     return (
       "William Shakespeare (26 April 1564 - 23 April 1616) was an " +
@@ -22,6 +22,13 @@ export default function QueryProcessor(query: string): string {
 
   if (query.toLowerCase().includes("name")) {
     return "Lujain";
+  }
+
+  const plusMatch = q.match(/what is (\d+)\s+plus\s+(\d+)\??/);
+  if (plusMatch) {
+    const a = parseInt(plusMatch[1]);
+    const b = parseInt(plusMatch[2]);
+    return String(a + b);
   }
 
   const largestMatch = q.match(/largest.*?(\d+)[^\d]+(\d+)[^\d]+(\d+)/);
