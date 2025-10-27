@@ -51,16 +51,15 @@ export default function QueryProcessor(query: string): string {
     return String(Math.max(...nums));
   }
 
-  const squareCubeMatch = q.match(/both a square and a cube.*?([\d,\s]+)/);
-  if (squareCubeMatch) {
-    const numbers = squareCubeMatch[1].split(",").map(n => parseInt(n.trim()));
-    const result = numbers.filter(n => {
-      const root = Math.round(Math.pow(n, 1/6));
-      return root ** 6 === n;
-    });
-    return result.join(", ");
-  }
-
+    const squareCubeMatch = q.match(/both a square and a cube.*?([\d,\s]+)/);
+    if (squareCubeMatch) {
+      const numbers = squareCubeMatch[1].split(",").map(n => parseInt(n.trim()));
+      const result = numbers.filter(n => {
+        const root = Math.round(Math.pow(n, 1 / 6));
+        return root ** 6 === n;
+      });
+      return result.join(", ");
+    }
 
   const primesMatch = q.match(/which of the following numbers are primes.*?([\d,\s]+)/);
   if (primesMatch) {
