@@ -31,11 +31,29 @@ export default function QueryProcessor(query: string): string {
     return String(a + b);
   }
 
+  const multiplyMatch = q.match(/what is (\d+)\s+(?:multiplied by|times)\s+(\d+)\??/);
+  if (multiplyMatch) {
+    const a = parseInt(multiplyMatch[1]);
+    const b = parseInt(multiplyMatch[2]);
+    return String(a * b);
+  }
+
   const largestMatch = q.match(/largest.*?(\d+)[^\d]+(\d+)[^\d]+(\d+)/);
   if (largestMatch) {
     const nums = largestMatch.slice(1, 4).map(Number);
     return String(Math.max(...nums));
   }
+
+  const squareCubeMatch = q.match(/both a square and a cube.*?([\d,\s]+)/);
+  if (squareCubeMatch) {
+    const numbers = squareCubeMatch[1].split(",").map(n => parseInt(n.trim()));
+    const result = numbers.filter(n => {
+      const root = Math.round(Math.pow(n, 1/6));
+      return root ** 6 === n;
+    });
+    return result.join(", ");
+  }
+
 
   return "";
 }
