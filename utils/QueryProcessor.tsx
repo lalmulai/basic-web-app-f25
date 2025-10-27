@@ -31,6 +31,13 @@ export default function QueryProcessor(query: string): string {
     return String(a + b);
   }
 
+  const minusMatch = q.match(/what is (\d+)\s+minus\s+(\d+)\??/);
+  if (minusMatch) {
+    const a = parseInt(minusMatch[1]);
+    const b = parseInt(minusMatch[2]);
+    return String(a - b);
+  }
+
   const multiplyMatch = q.match(/what is (\d+)\s+(?:multiplied by|times)\s+(\d+)\??/);
   if (multiplyMatch) {
     const a = parseInt(multiplyMatch[1]);
