@@ -62,5 +62,19 @@ export default function QueryProcessor(query: string): string {
   }
 
 
+  const primesMatch = q.match(/which of the following numbers are primes.*?([\d,\s]+)/);
+  if (primesMatch) {
+    const numbers = primesMatch[1].split(",").map(n => parseInt(n.trim()));
+    const result = numbers.filter(n => {
+      if (n < 2) return false;
+      for (let i = 2; i <= Math.sqrt(n); i++) {
+        if (n % i === 0) return false;
+      }
+      return true;
+    });
+    return result.join(", ");
+  }
+
+
   return "";
 }
