@@ -19,5 +19,18 @@ export default function QueryProcessor(query: string): string {
     return "Lujain";
   }
 
+  const plusMatch = q.match(/what is (\d+)\s+plus\s+(\d+)\??/);
+  if (plusMatch) {
+    const a = parseInt(plusMatch[1]);
+    const b = parseInt(plusMatch[2]);
+    return String(a + b);
+  }
+
+  const largestMatch = q.match(/largest.*?(\d+)[^\d]+(\d+)[^\d]+(\d+)/);
+  if (largestMatch) {
+    const nums = largestMatch.slice(1, 4).map(Number);
+    return String(Math.max(...nums));
+  }
+
   return "";
 }
