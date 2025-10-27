@@ -75,11 +75,29 @@ export default function QueryProcessor(query: string): string {
   }
 
   const multiPlusMatch = q.match(/what is ([\d\s+plus]+)\??/);
-if (multiPlusMatch) {
-  const numbers = multiPlusMatch[1].match(/\d+/g)?.map(Number) || [];
-  const sum = numbers.reduce((a, b) => a + b, 0);
-  return String(sum);
-}
+  if (multiPlusMatch) {
+    const numbers = multiPlusMatch[1].match(/\d+/g)?.map(Number) || [];
+    const sum = numbers.reduce((a, b) => a + b, 0);
+    return String(sum);
+  }
+
+    const arithmeticMatch = q.match(/what is (.+)\??/);
+  if (arithmeticMatch) {
+
+    let expr = arithmeticMatch[1]
+      .replace(/plus/g, "+")
+      .replace(/minus/g, "-")
+      .replace(/multiplied by|times/g, "*")
+      .replace(/divided by/g, "/");
+    expr = expr.replace(/\s+/g, " ").trim();
+
+    try {
+      const result = new Function("return " + expr)();
+      return String(result);
+    } catch {
+      return "";
+    }
+  }
 
 
   return "";
